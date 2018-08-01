@@ -69,7 +69,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -115,10 +118,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="SWilliams_TicTacToeGroup\Globals.h" />
+    <ClInclude Include="Globals.h" />
+    <ClInclude Include="State.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SWilliams_TicTacToeGroup\Source.cpp" />
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="State.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SWilliams_TicTacToeGroup\libFLAC-8.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libfreetype-6.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libjpeg-9.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libmodplug-1.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libogg-0.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libpng16-16.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libtiff-5.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libvorbis-0.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libvorbisfile-3.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libwebp-4.dll" />
+    <None Include="SWilliams_TicTacToeGroup\SDL2.dll" />
+    <None Include="SWilliams_TicTacToeGroup\SDL2_image.dll" />
+    <None Include="SWilliams_TicTacToeGroup\SDL2_mixer.dll" />
+    <None Include="SWilliams_TicTacToeGroup\SDL2_ttf.dll" />
+    <None Include="SWilliams_TicTacToeGroup\smpeg2.dll" />
+    <None Include="SWilliams_TicTacToeGroup\zlib1.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

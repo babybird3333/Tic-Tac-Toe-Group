@@ -15,13 +15,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SWilliams_TicTacToeGroup\Globals.h">
+    <ClInclude Include="State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SWilliams_TicTacToeGroup\Source.cpp">
+    <ClCompile Include="State.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SWilliams_TicTacToeGroup\libFLAC-8.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libfreetype-6.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libjpeg-9.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libmodplug-1.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libogg-0.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libpng16-16.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libtiff-5.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libvorbis-0.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libvorbisfile-3.dll" />
+    <None Include="SWilliams_TicTacToeGroup\libwebp-4.dll" />
+    <None Include="SWilliams_TicTacToeGroup\SDL2.dll" />
+    <None Include="SWilliams_TicTacToeGroup\SDL2_image.dll" />
+    <None Include="SWilliams_TicTacToeGroup\SDL2_mixer.dll" />
+    <None Include="SWilliams_TicTacToeGroup\SDL2_ttf.dll" />
+    <None Include="SWilliams_TicTacToeGroup\smpeg2.dll" />
+    <None Include="SWilliams_TicTacToeGroup\zlib1.dll" />
   </ItemGroup>
 </Project>
