@@ -19,6 +19,7 @@ public:
 	SDL_Texture * background;
 	State();
 	virtual void update();
+	void CheckEvents(SDL_Event);
 	void draw();
 	virtual ~State();
 };

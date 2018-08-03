@@ -17,6 +17,7 @@ using namespace std;
 /*VARIABLE SECTION*/
 extern double delta; //Delta time - SCW
 extern bool running; //Keeps track of whether the application is running - SCW
+bool updating; //Keeps track of the update state of the application - SCW
 static int n = SDL_Init(SDL_INIT_EVERYTHING); //Initialize SDL - SCW
 static int k = TTF_Init(); //Initialize true type font - SCW
 extern SDL_Window *window; //Canvas - SCW
