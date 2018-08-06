@@ -77,6 +77,7 @@ Menu::Menu()
 {
 	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
 	
+	//Create Buttons and set there X,Y Coordinates - Kai
 	//button[MENU] = new Button(0, 64);
 	button[OPTIONS] = new Button(0, 128);
 	button[START] = new Button(0, 192);

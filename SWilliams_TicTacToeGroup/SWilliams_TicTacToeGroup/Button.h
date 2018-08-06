@@ -1,5 +1,7 @@
 #pragma once
 #include "Globals.h"
+
+/*ALL OF BUTTON CLASS (.cpp, .h) = KAI*/
 class Button
 {
 public:
