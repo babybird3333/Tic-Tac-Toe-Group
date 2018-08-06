@@ -84,6 +84,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -94,6 +98,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,22 +138,37 @@
     <ClCompile Include="State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="libjpeg-9.dll" />
+    <None Include="libogg-0.dll" />
+    <None Include="libpng16-16.dll" />
+    <None Include="libvorbis-0.dll" />
+    <None Include="libvorbisfile-3.dll" />
+    <None Include="SDL2_mixer.dll" />
+    <None Include="SDL2_ttf.dll" />
     <None Include="SWilliams_TicTacToeGroup\libFLAC-8.dll" />
     <None Include="SWilliams_TicTacToeGroup\libfreetype-6.dll" />
-    <None Include="SWilliams_TicTacToeGroup\libjpeg-9.dll" />
     <None Include="SWilliams_TicTacToeGroup\libmodplug-1.dll" />
-    <None Include="SWilliams_TicTacToeGroup\libogg-0.dll" />
-    <None Include="SWilliams_TicTacToeGroup\libpng16-16.dll" />
     <None Include="SWilliams_TicTacToeGroup\libtiff-5.dll" />
-    <None Include="SWilliams_TicTacToeGroup\libvorbis-0.dll" />
-    <None Include="SWilliams_TicTacToeGroup\libvorbisfile-3.dll" />
     <None Include="SWilliams_TicTacToeGroup\libwebp-4.dll" />
     <None Include="SWilliams_TicTacToeGroup\SDL2.dll" />
     <None Include="SWilliams_TicTacToeGroup\SDL2_image.dll" />
-    <None Include="SWilliams_TicTacToeGroup\SDL2_mixer.dll" />
-    <None Include="SWilliams_TicTacToeGroup\SDL2_ttf.dll" />
     <None Include="SWilliams_TicTacToeGroup\smpeg2.dll" />
     <None Include="SWilliams_TicTacToeGroup\zlib1.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\BlueO.png" />
+    <Image Include="Images\BlueX.png" />
+    <Image Include="Images\ButtonSheet.png" />
+    <Image Include="Images\CrossBoard.png" />
+    <Image Include="Images\GameBackGround.png" />
+    <Image Include="Images\GreenO.png" />
+    <Image Include="Images\GreenX.png" />
+    <Image Include="Images\MainButton.png" />
+    <Image Include="Images\OptionsButton.png" />
+    <Image Include="Images\RedO.png" />
+    <Image Include="Images\RedX.png" />
+    <Image Include="Images\ScoreButton.png" />
+    <Image Include="Images\StartButton.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

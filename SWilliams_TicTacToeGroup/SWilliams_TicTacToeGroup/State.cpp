@@ -16,8 +16,7 @@ void State::update()
 
 void State::CheckEvents(SDL_Event e)
 {
-	while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
-	{
+	
 		switch (e.type) //Check the even type - SCW
 		{
 		case SDL_QUIT: //If quitting the application - SCW
@@ -57,7 +56,7 @@ void State::CheckEvents(SDL_Event e)
 				//}
 			}
 		}
-	}
+	
 }
 
 
@@ -76,19 +75,33 @@ State::~State()
 #pragma region Menu
 Menu::Menu()
 {
-	//background = IMG_LoadTexture(ren, "Images/BG_Menu.png");//Load texture for the background - SCW
+	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
 
 }
 
 void Menu::update()
 {
-	updating = true; //Set update state of the application to true - SCW
+	bool updating = true; //Set update state of the application to true - SCW
 	SDL_Event e; //Keeps track of the event - SCW
+	
 	while (updating) //To do while update state is true - SCW
 	{
-		CheckEvents(e); //Call function to check SDL events - SCW
+		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
+		{
+			CheckEvents(e); //Call function to check SDL events - SCW
+			if (e.type == SDL_QUIT)
+			{
+				updating = false;
+			}
+		}
 	}
 
+	//Get keyboard Input
+	//Update Objects
+	//Check Things (mouse location, collision, etc.)
+	//Call draw function(s)
+	draw();
+	//Check for State Change
 }
 
 Menu::~Menu()
@@ -105,12 +118,27 @@ Game::Game()
 }
 void Game::update()
 {	
-	updating = true; //Set update state of the application to true - SCW
+	bool updating = true; //Set update state of the application to true - SCW
 	SDL_Event e; //Keeps track of the event - SCW
+
 	while (updating) //To do while update state is true - SCW
 	{
-		CheckEvents(e); //Call function to check SDL events - SCW
+		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
+		{
+			CheckEvents(e); //Call function to check SDL events - SCW
+			if (e.type == SDL_QUIT)
+			{
+				updating = false;
+			}
+		}
 	}
+
+	//Get keyboard Input
+	//Update Objects
+	//Check Things (mouse location, collision, etc.)
+	//Call draw function(s)
+	draw();
+	//Check for State Change
 }
 Game::~Game()
 {
@@ -125,12 +153,27 @@ Options::Options()
 }
 void Options::update()
 {
-	updating = true; //Set update state of the application to true - SCW
+	bool updating = true; //Set update state of the application to true - SCW
 	SDL_Event e; //Keeps track of the event - SCW
+
 	while (updating) //To do while update state is true - SCW
 	{
-		CheckEvents(e); //Call function to check SDL events - SCW
+		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
+		{
+			CheckEvents(e); //Call function to check SDL events - SCW
+			if (e.type == SDL_QUIT)
+			{
+				updating = false;
+			}
+		}
 	}
+
+	//Get keyboard Input
+	//Update Objects
+	//Check Things (mouse location, collision, etc.)
+	//Call draw function(s)
+	draw();
+	//Check for State Change
 }
 Options::~Options()
 {
@@ -146,12 +189,27 @@ HighScore::HighScore()
 
 void HighScore::update()
 {
-	updating = true; //Set update state of the application to true - SCW
+	bool updating = true; //Set update state of the application to true - SCW
 	SDL_Event e; //Keeps track of the event - SCW
+
 	while (updating) //To do while update state is true - SCW
 	{
-		CheckEvents(e); //Call function to check SDL events - SCW
+		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
+		{
+			CheckEvents(e); //Call function to check SDL events - SCW
+			if (e.type == SDL_QUIT)
+			{
+				updating = false;
+			}
+		}
 	}
+
+	//Get keyboard Input
+	//Update Objects
+	//Check Things (mouse location, collision, etc.)
+	//Call draw function(s)
+	draw();
+	//Check for State Change
 }
 
 HighScore::~HighScore()
@@ -162,9 +220,13 @@ HighScore::~HighScore()
 
 
 /*VARIABLE SECTION*/ //-SCW
-//State Pointers
+
+//State Pointers - SCW
 State *menu = new Menu;
 State *game = new Game;
 State *options = new Options;
 State *highscore = new HighScore;
-State*current = menu; //Application starts off in the 'Menu' State
+State *current = menu; //Application starts off in the 'Menu' State - SCW
+SDL_Window *window = SDL_CreateWindow("TIC-TAC-TOE: The Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN); //Initialize SDL window (set loactions, dimensions, and error flag) - SCW
+SDL_Renderer *ren = SDL_CreateRenderer(window, - 1, SDL_RENDERER_ACCELERATED); //Initialize SDL Renderer - SCW
+bool running = true; //Set running state to true - SCW

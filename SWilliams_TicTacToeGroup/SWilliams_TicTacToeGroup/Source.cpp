@@ -2,7 +2,7 @@
 #include "State.h"
 using namespace std;
 
-void main() 
+int main(int argc, char **args) 
 {
 
 //Start/Run Application (State Machine), while running = true
@@ -14,4 +14,5 @@ void main()
 	SDL_DestroyWindow(window); //Destroy the canvas/window
 	SDL_Quit(); //Quit SDL Application
 
+	return 0;
 }
