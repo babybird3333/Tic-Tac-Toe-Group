@@ -76,6 +76,15 @@ State::~State()
 Menu::Menu()
 {
 	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
+	
+	//button[MENU] = new Button(0, 64);
+	button[OPTIONS] = new Button(0, 128);
+	button[START] = new Button(0, 192);
+	button[SCORE] = new Button(0, 256);
+
+	button[OPTIONS]->setXY(100, 100);
+	button[START]->setXY(200, 200);
+	button[SCORE]->setXY(300, 300);
 
 }
 

@@ -3,6 +3,7 @@
 
 #pragma region Includes and Usings
 #include "Globals.h"
+#include "Button.h"
 using namespace std;
 #pragma endregion
 
@@ -27,6 +28,8 @@ public:
 class Menu : public State { //Menu Class (derived from State) - SCW
 
 public:
+	enum Buttons { MENU, OPTIONS, START, SCORE };
+	Button * button[5];
 	Menu();
 	virtual void update();
 	virtual  ~Menu();
