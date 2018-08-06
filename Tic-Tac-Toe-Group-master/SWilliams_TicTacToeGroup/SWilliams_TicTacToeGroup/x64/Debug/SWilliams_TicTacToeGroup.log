@@ -1,0 +1,24 @@
+﻿  Button.cpp
+  Source.cpp
+  State.cpp
+  Generating Code...
+Button.obj : error LNK2019: unresolved external symbol SDL_Init referenced in function "void __cdecl `dynamic initializer for 'n''(void)" (??__En@@YAXXZ)
+Source.obj : error LNK2001: unresolved external symbol SDL_Init
+State.obj : error LNK2001: unresolved external symbol SDL_Init
+Button.obj : error LNK2019: unresolved external symbol IMG_LoadTexture referenced in function "public: __cdecl Button::Button(int,int)" (??0Button@@QEAA@HH@Z)
+State.obj : error LNK2001: unresolved external symbol IMG_LoadTexture
+Button.obj : error LNK2019: unresolved external symbol TTF_Init referenced in function "void __cdecl `dynamic initializer for 'k''(void)" (??__Ek@@YAXXZ)
+Source.obj : error LNK2001: unresolved external symbol TTF_Init
+State.obj : error LNK2001: unresolved external symbol TTF_Init
+Source.obj : error LNK2019: unresolved external symbol SDL_DestroyWindow referenced in function SDL_main
+Source.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function SDL_main
+State.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "void __cdecl `dynamic initializer for 'window''(void)" (??__Ewindow@@YAXXZ)
+State.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "public: virtual void __cdecl Game::update(void)" (?update@Game@@UEAAXXZ)
+State.obj : error LNK2019: unresolved external symbol SDL_CreateRenderer referenced in function "void __cdecl `dynamic initializer for 'ren''(void)" (??__Eren@@YAXXZ)
+State.obj : error LNK2019: unresolved external symbol SDL_RenderCopy referenced in function "public: void __cdecl State::draw(void)" (?draw@State@@QEAAXXZ)
+MSVCRTD.lib(exe_winmain.obj) : error LNK2019: unresolved external symbol WinMain referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\SDL2\lib\x86\SDL2.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\SDL2\lib\x86\SDL2_image.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\SDL2\lib\x86\SDL2_mixer.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\SDL2\lib\x86\SDL2_ttf.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+T:\Users\acstrever\Desktop\Tic-Tac-Toe-Group-master\SWilliams_TicTacToeGroup\x64\Debug\SWilliams_TicTacToeGroup.exe : fatal error LNK1120: 10 unresolved externals
