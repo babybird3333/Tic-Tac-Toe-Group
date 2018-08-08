@@ -76,7 +76,7 @@ State::~State()
 Menu::Menu()
 {
 	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
-	
+	cout << SDL_GetError() << endl;
 	//Create Buttons and set there X,Y Coordinates - Kai
 	//button[MENU] = new Button(0, 64);
 	button[OPTIONS] = new Button(0, 128);
@@ -274,13 +274,12 @@ HighScore::~HighScore()
 
 
 /*VARIABLE SECTION*/ //-SCW
-
+SDL_Window *window = SDL_CreateWindow("TIC-TAC-TOE: The Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN); //Initialize SDL window (set loactions, dimensions, and error flag) - SCW
+SDL_Renderer *ren = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); //Initialize SDL Renderer - SCW
 //State Pointers - SCW
 State *menu = new Menu;
 State *game = new Game;
 State *options = new Options;
 State *highscore = new HighScore;
 State *current = menu; //Application starts off in the 'Menu' State - SCW
-SDL_Window *window = SDL_CreateWindow("TIC-TAC-TOE: The Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN); //Initialize SDL window (set loactions, dimensions, and error flag) - SCW
-SDL_Renderer *ren = SDL_CreateRenderer(window, - 1, SDL_RENDERER_ACCELERATED); //Initialize SDL Renderer - SCW
 bool running = true; //Set running state to true - SCW
