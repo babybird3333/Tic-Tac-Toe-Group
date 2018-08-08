@@ -257,7 +257,17 @@ Options::~Options()
 #pragma region HighScore
 HighScore::HighScore()
 {
+    rect = SDL_Rect{ 20, 20, 0, 0 };
 	//background = IMG_LoadTexture(ren, "Images/BG_HighScore.png");//Load texture for the background - SCW
+    font = TTF_OpenFont("vgafix.fon", 18);
+    
+    surface = TTF_RenderText_Blended_Wrapped(font, "i like\n peanuts", SDL_Color{255, 50, 50, 255}, 400);
+    texture = SDL_CreateTextureFromSurface(ren, surface);
+
+    SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+    SDL_RenderCopy(ren, texture, NULL, &rect);
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
 }
 
 void HighScore::update()

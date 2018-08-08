@@ -61,10 +61,15 @@ public:
 class HighScore : public State { //HighScore Class (derived from State) - SCW
  
 public:
+    SDL_Texture* texture;
+    SDL_Surface* surface;
+    SDL_Rect rect;
+    TTF_Font* font;
+    string players[10];
+
 	HighScore();
 	virtual void update();
 	virtual  ~HighScore();
-
 };
 
 
