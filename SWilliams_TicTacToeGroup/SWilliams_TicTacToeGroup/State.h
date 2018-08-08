@@ -29,8 +29,10 @@ class Menu : public State { //Menu Class (derived from State) - SCW
 
 public:
 	//Insert Button Information - Kai
-	enum Buttons { MENU, OPTIONS, START, SCORE };
-	Button * button[5];
+	enum Buttons {MENU, OPTIONS, START, SCORE };
+	Button * button[4];
+
+	
 	Menu();
 	virtual void update();
 	virtual  ~Menu();

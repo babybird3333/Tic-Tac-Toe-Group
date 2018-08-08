@@ -76,16 +76,21 @@ State::~State()
 Menu::Menu()
 {
 	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
-	cout << SDL_GetError() << endl;
-	//Create Buttons and set there X,Y Coordinates - Kai
-	//button[MENU] = new Button(0, 64);
-	button[OPTIONS] = new Button(0, 128);
-	button[START] = new Button(0, 192);
-	button[SCORE] = new Button(0, 256);
+	cout << SDL_GetError() << endl; //Show SDL Errors - SCW
 
-	button[OPTIONS]->setXY(100, 100);
-	button[START]->setXY(200, 200);
-	button[SCORE]->setXY(300, 300);
+
+
+
+	/*Create Buttons and set there X,Y Coordinates - Kai*/
+	button[MENU] = new Button(0, 0);
+	button[OPTIONS] = new Button(0, 64);
+	button[START] = new Button(0, 128);
+	button[SCORE] = new Button(0, 192);
+	
+
+	button[START]->setXY(500, 340);
+	button[OPTIONS]->setXY(500, 410);
+	button[SCORE]->setXY(500, 480);
 
 }
 
@@ -148,7 +153,21 @@ void Menu::update()
 		//Update Objects
 		//Check Things (mouse location, collision, etc.)
 		//Call draw function(s)
-		draw();
+		draw(); //Draw the canvas background
+		int i = 0;
+		for (auto n : button)
+		{
+
+			if (i == 0)
+			{
+				i++;
+				continue;
+
+			}
+			n->draw(); //Draw the buttons (except 'MENU')
+			i++;
+
+		}
 		SDL_RenderPresent(ren); // show the screen
 
 		//Check for State Change
