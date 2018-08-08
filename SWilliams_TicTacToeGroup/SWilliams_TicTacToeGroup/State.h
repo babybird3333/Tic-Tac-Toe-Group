@@ -69,4 +69,17 @@ public:
 	virtual void update();
 	virtual  ~HighScore();
 };
+
+
+
+class WinLose : public State { //WinLose Class (derived from State) - SCW
+
+public:
+	WinLose();
+	virtual void update();
+	virtual  ~WinLose();
+
+};
+
+
 #pragma endregion

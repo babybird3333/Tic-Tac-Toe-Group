@@ -25,7 +25,7 @@ void State::CheckEvents(SDL_Event e)
 		case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
 			if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
 			{
-				//TODO ONCE BUTTONS HAVE BEEN CREATED - SCW
+				////TODO ONCE BUTTONS HAVE BEEN CREATED - SCW
 				//if (button[MENU]->selected)
 				//{
 				//	//Go to Menu State
@@ -63,8 +63,6 @@ void State::CheckEvents(SDL_Event e)
 void State::draw()
 {
 	SDL_RenderCopy(ren, background, NULL, NULL); //Draw the canvas - SCW
-    HighScore hg;
-    SDL_RenderPresent(ren);
 }
 
 State::~State()
@@ -78,7 +76,7 @@ State::~State()
 Menu::Menu()
 {
 	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
-	
+	cout << SDL_GetError() << endl;
 	//Create Buttons and set there X,Y Coordinates - Kai
 	//button[MENU] = new Button(0, 64);
 	button[OPTIONS] = new Button(0, 128);
@@ -100,22 +98,65 @@ void Menu::update()
 	{
 		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
 		{
-			CheckEvents(e); //Call function to check SDL events - SCW
+			switch (e.type) //Check the even type - SCW
+			{
+			case SDL_QUIT: //If quitting the application - SCW
+				running = false; //Set the run state of the application to false = SCW
+				return;
+			case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
+				if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
+				{
+					//TODO ONCE BUTTONS HAVE BEEN CREATED - SCW
+					if (button[MENU]->selected)
+					{
+						//Go to Menu State
+						current = menu;
+						updating = false;
+						return;
+					}
+					else if (button[START]->selected)
+					{
+						//Go to Game State
+						current = game;
+						updating = false;
+						return;
+					}
+					else if (button[OPTIONS]->selected)
+					{
+						//Go to Options State
+						current = options;
+						updating = false;
+						return;
+					}
+					else if (button[SCORE]->selected)
+					{
+						//Go to ScoreBoard State
+						current = highscore;
+						updating = false;
+						return;
+					}
+				}
+			}
+
 			if (e.type == SDL_QUIT)
 			{
 				updating = false;
 			}
 		}
-        
-        draw();
 	}
 
-	//Get keyboard Input
-	//Update Objects
-	//Check Things (mouse location, collision, etc.)
-	//Call draw function(s)
+		//Get keyboard Input
+		//Update Objects
+		//Check Things (mouse location, collision, etc.)
+		//Call draw function(s)
+		draw();
+		SDL_RenderPresent(ren); // show the screen
+
+		//Check for State Change
+
+	}
+
 	
-	//Check for State Change
 }
 
 Menu::~Menu()
@@ -244,13 +285,12 @@ HighScore::~HighScore()
 
 
 /*VARIABLE SECTION*/ //-SCW
-
+SDL_Window *window = SDL_CreateWindow("TIC-TAC-TOE: The Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN); //Initialize SDL window (set loactions, dimensions, and error flag) - SCW
+SDL_Renderer *ren = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); //Initialize SDL Renderer - SCW
 //State Pointers - SCW
 State *menu = new Menu;
 State *game = new Game;
 State *options = new Options;
-//State *highscore;
+State *highscore = new HighScore;
 State *current = menu; //Application starts off in the 'Menu' State - SCW
-SDL_Window *window = SDL_CreateWindow("TIC-TAC-TOE: The Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN); //Initialize SDL window (set loactions, dimensions, and error flag) - SCW
-SDL_Renderer *ren = SDL_CreateRenderer(window, - 1, SDL_RENDERER_ACCELERATED); //Initialize SDL Renderer - SCW
 bool running = true; //Set running state to true - SCW
