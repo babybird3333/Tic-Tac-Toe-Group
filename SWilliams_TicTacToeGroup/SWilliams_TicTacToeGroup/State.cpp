@@ -63,6 +63,8 @@ void State::CheckEvents(SDL_Event e)
 void State::draw()
 {
 	SDL_RenderCopy(ren, background, NULL, NULL); //Draw the canvas - SCW
+    HighScore hg;
+    SDL_RenderPresent(ren);
 }
 
 State::~State()
@@ -104,13 +106,15 @@ void Menu::update()
 				updating = false;
 			}
 		}
+        
+        draw();
 	}
 
 	//Get keyboard Input
 	//Update Objects
 	//Check Things (mouse location, collision, etc.)
 	//Call draw function(s)
-	draw();
+	
 	//Check for State Change
 }
 
@@ -194,7 +198,17 @@ Options::~Options()
 #pragma region HighScore
 HighScore::HighScore()
 {
+    rect = SDL_Rect{ 20, 20, 0, 0 };
 	//background = IMG_LoadTexture(ren, "Images/BG_HighScore.png");//Load texture for the background - SCW
+    font = TTF_OpenFont("vgafix.fon", 18);
+    
+    surface = TTF_RenderText_Blended_Wrapped(font, "i like\n peanuts", SDL_Color{255, 50, 50, 255}, 400);
+    texture = SDL_CreateTextureFromSurface(ren, surface);
+
+    SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+    SDL_RenderCopy(ren, texture, NULL, &rect);
+    SDL_DestroyTexture(texture);
+    SDL_FreeSurface(surface);
 }
 
 void HighScore::update()
@@ -235,7 +249,7 @@ HighScore::~HighScore()
 State *menu = new Menu;
 State *game = new Game;
 State *options = new Options;
-State *highscore = new HighScore;
+//State *highscore;
 State *current = menu; //Application starts off in the 'Menu' State - SCW
 SDL_Window *window = SDL_CreateWindow("TIC-TAC-TOE: The Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_SHOWN); //Initialize SDL window (set loactions, dimensions, and error flag) - SCW
 SDL_Renderer *ren = SDL_CreateRenderer(window, - 1, SDL_RENDERER_ACCELERATED); //Initialize SDL Renderer - SCW
