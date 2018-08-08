@@ -91,72 +91,69 @@ Menu::Menu()
 
 void Menu::update()
 {
-	bool updating = true; //Set update state of the application to true - SCW
-	SDL_Event e; //Keeps track of the event - SCW
-	
-	while (updating) //To do while update state is true - SCW
-	{
-		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
-		{
-			switch (e.type) //Check the even type - SCW
-			{
-			case SDL_QUIT: //If quitting the application - SCW
-				running = false; //Set the run state of the application to false = SCW
-				return;
-			case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
-				if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
-				{
-					//TODO ONCE BUTTONS HAVE BEEN CREATED - SCW
-					if (button[MENU]->selected)
-					{
-						//Go to Menu State
-						current = menu;
-						updating = false;
-						return;
-					}
-					else if (button[START]->selected)
-					{
-						//Go to Game State
-						current = game;
-						updating = false;
-						return;
-					}
-					else if (button[OPTIONS]->selected)
-					{
-						//Go to Options State
-						current = options;
-						updating = false;
-						return;
-					}
-					else if (button[SCORE]->selected)
-					{
-						//Go to ScoreBoard State
-						current = highscore;
-						updating = false;
-						return;
-					}
-				}
-			}
+    bool updating = true; //Set update state of the application to true - SCW
+    SDL_Event e; //Keeps track of the event - SCW
 
-			if (e.type == SDL_QUIT)
-			{
-				updating = false;
-			}
-		}
-	}
+    while (updating) //To do while update state is true - SCW
+    {
+        while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
+        {
+            switch (e.type) //Check the even type - SCW
+            {
+            case SDL_QUIT: //If quitting the application - SCW
+                running = false; //Set the run state of the application to false = SCW
+                return;
+            case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
+                if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
+                {
+                    //TODO ONCE BUTTONS HAVE BEEN CREATED - SCW
+                    if (button[MENU]->selected)
+                    {
+                        //Go to Menu State
+                        current = menu;
+                        updating = false;
+                        return;
+                    }
+                    else if (button[START]->selected)
+                    {
+                        //Go to Game State
+                        current = game;
+                        updating = false;
+                        return;
+                    }
+                    else if (button[OPTIONS]->selected)
+                    {
+                        //Go to Options State
+                        current = options;
+                        updating = false;
+                        return;
+                    }
+                    else if (button[SCORE]->selected)
+                    {
+                        //Go to ScoreBoard State
+                        current = highscore;
+                        updating = false;
+                        return;
+                    }
+                }
+            }
 
-		//Get keyboard Input
-		//Update Objects
-		//Check Things (mouse location, collision, etc.)
-		//Call draw function(s)
-		draw();
-		SDL_RenderPresent(ren); // show the screen
+            if (e.type == SDL_QUIT)
+            {
+                updating = false;
+            }
+        }
+    }
 
-		//Check for State Change
+    //Get keyboard Input
+    //Update Objects
+    //Check Things (mouse location, collision, etc.)
+    //Call draw function(s)
+    draw();
+    SDL_RenderPresent(ren); // show the screen
 
-	}
+    //Check for State Change
 
-	
 }
 
 Menu::~Menu()
