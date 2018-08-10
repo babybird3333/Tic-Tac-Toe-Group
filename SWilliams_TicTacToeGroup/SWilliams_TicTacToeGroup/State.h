@@ -4,6 +4,8 @@
 #pragma region Includes and Usings
 #include "Globals.h"
 #include "Button.h"
+#include "Mouse.h"
+#include "Player.h"
 using namespace std;
 #pragma endregion
 
@@ -18,6 +20,7 @@ class State //State Class - SCW
 {
 public:
 	SDL_Texture * background;
+	Mouse *mouse;
 	State();
 	virtual void update();
 	void draw();

@@ -16,18 +16,18 @@ void Button::setXY(int x, int y)
 	dRect.y = y;
 }
 
-void Button::checkSelected()
+void Button::checkSelected(Mouse *mouse)
 {
-	//if (SDL_HasIntersection(/*&*/(/*mouse stuff*/), &dRect))
-	//{
-	//selected = true;
-	//sRect.x = 192;
-	//}
-	//else
-	//{
-	//selected = false;
-	//sRect.x = 0;
-	//}
+	if (SDL_HasIntersection(&(mouse->tip), &dRect))
+	{
+	selected = true;
+	sRect.x = 192;
+	}
+	else
+	{
+	selected = false;
+	sRect.x = 0;
+	}
 }
 void Button::draw()
 {

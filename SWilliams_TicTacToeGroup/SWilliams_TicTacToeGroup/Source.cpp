@@ -5,6 +5,9 @@ using namespace std;
 int main(int argc, char **args) 
 {
 
+	//Set show cursor to false
+	SDL_ShowCursor(false);
+
 //Start/Run Application (State Machine), while running = true
 	while (running)
 	{

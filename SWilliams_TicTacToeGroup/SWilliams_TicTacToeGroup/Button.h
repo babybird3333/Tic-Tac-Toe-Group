@@ -1,5 +1,6 @@
 #pragma once
 #include "Globals.h"
+#include "Mouse.h"
 
 /*ALL OF BUTTON CLASS (.cpp, .h) = KAI*/
 class Button
@@ -12,7 +13,7 @@ public:
 	Button();	//Kai
 	Button(int x, int y);	//Kai
 	void setXY(int x, int y);	//Kai
-	void checkSelected();
+	void checkSelected(Mouse*);
 	void draw();
 	~Button();
 };

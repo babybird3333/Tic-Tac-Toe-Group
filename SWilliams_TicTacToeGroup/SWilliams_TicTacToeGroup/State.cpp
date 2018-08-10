@@ -8,6 +8,12 @@
 #pragma region State
 State::State()
 {
+
+	//Set up the mouse - SCW
+	static Mouse *m = new Mouse;
+	mouse = m;
+
+
 }
 
 void State::update()
@@ -107,8 +113,10 @@ void Menu::update()
 		}
 
 		//Get keyboard Input
+		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
 		//Update Objects
 		//Check Things (mouse location, collision, etc.)
+		SDL_GetMouseState(&(mouse->cursor.x), &(mouse->cursor.y)); //Access the location of the mouse's cursor rectangle - SCW
 		//Call draw function(s)
 		draw(); //Draw the canvas background
 		int i = 0;
@@ -122,9 +130,11 @@ void Menu::update()
 
 			}
 			n->draw(); //Draw the buttons (except 'MENU')
+			n->checkSelected(mouse);
 			i++;
 
 		}
+		mouse->draw(); //Draw the mouse
 		SDL_RenderPresent(ren); // show the screen
 
 		//Check for State Change
@@ -149,7 +159,7 @@ Game::Game()
 	
 	/*Create Button and set its X,Y Coordinates - Kai*/
 	menubutton = new Button(0, 0);
-	menubutton->setXY(500, 280);
+	menubutton->setXY(500, 580);
 
 }
 void Game::update()
@@ -192,10 +202,13 @@ void Game::update()
 		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
 		//Update Objects
 		//Check Things (mouse location, collision, etc.)
+		SDL_GetMouseState(&(mouse->cursor.x), &(mouse->cursor.y)); //Access the location of the mouse's cursor rectangle - SCW
 		//Call draw function(s)
 		draw(); //Draw the screen - SCW
 		menubutton->draw(); //Draw the menu button - SCW
-
+		menubutton->checkSelected(mouse); //Check to see if the button has been selected - SCW
+		mouse->draw(); //Draw the mouse - SCW
+		SDL_RenderPresent(ren); // show the screen
 		//Check for State Change
 		if (currentKeyState[SDL_SCANCODE_ESCAPE])
 		{
@@ -223,7 +236,7 @@ Options::Options()
 	
 	/*Create Button and set its X,Y Coordinates - Kai*/
 	menubutton = new Button(0, 0);
-	menubutton->setXY(500, 680);
+	menubutton->setXY(500, 580);
 }
 void Options::update()
 {
@@ -265,9 +278,13 @@ void Options::update()
 		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
 																   //Update Objects
 																   //Check Things (mouse location, collision, etc.)
+		SDL_GetMouseState(&(mouse->cursor.x), &(mouse->cursor.y)); //Access the location of the mouse's cursor rectangle - SCW
 																   //Call draw function(s)
 		draw(); //Draw the screen - SCW
 		menubutton->draw(); //Draw the menu button - SCW
+		menubutton->checkSelected(mouse); //Check to see if the button has been selected - SCW
+		mouse->draw(); //Draw the mouse - SCW
+		SDL_RenderPresent(ren); // show the screen
 
 							//Check for State Change
 		if (currentKeyState[SDL_SCANCODE_ESCAPE])
@@ -295,7 +312,7 @@ HighScore::HighScore()
 
 	/*Create Button and set its X,Y Coordinates - Kai*/
 	menubutton = new Button(0, 0);
-	menubutton->setXY(500, 680);
+	menubutton->setXY(500, 580);
 
 
 
@@ -352,9 +369,13 @@ void HighScore::update()
 		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
 																   //Update Objects
 																   //Check Things (mouse location, collision, etc.)
+		SDL_GetMouseState(&(mouse->cursor.x), &(mouse->cursor.y)); //Access the location of the mouse's cursor rectangle - SCW
 																   //Call draw function(s)
 		draw(); //Draw the screen - SCW
 		menubutton->draw(); //Draw the menu button - SCW
+		menubutton->checkSelected(mouse); //Check to see if the button has been selected - SCW
+		mouse->draw(); //Draw the mouse - SCW
+		SDL_RenderPresent(ren); // show the screen
 
 							//Check for State Change
 		if (currentKeyState[SDL_SCANCODE_ESCAPE])
