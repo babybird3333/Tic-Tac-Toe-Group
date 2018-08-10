@@ -14,50 +14,7 @@ void State::update()
 {
 }
 
-void State::CheckEvents(SDL_Event e)
-{
-	
-		switch (e.type) //Check the even type - SCW
-		{
-		case SDL_QUIT: //If quitting the application - SCW
-			running = false; //Set the run state of the application to false = SCW
-			return;
-		case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
-			if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
-			{
-				////TODO ONCE BUTTONS HAVE BEEN CREATED - SCW
-				//if (button[MENU]->selected)
-				//{
-				//	//Go to Menu State
-				//	current = menu;
-				//	updating = false;
-				//	return;
-				//}
-				//else if (button[START]->selected)
-				//{
-				//	//Go to Game State
-				//	current = game;
-				//	updating = false;
-				//	return;
-				//}
-				//else if (button[OPTIONS]->selected)
-				//{
-				//	//Go to Options State
-				//	current = options;
-				//	updating = false;
-				//	return;
-				//}
-				//else if (button[HIGHSCORE]->selected)
-				//{
-				//	//Go to ScoreBoard State
-				//	current = highscore;
-				//	updating = false;
-				//	return;
-				//}
-			}
-		}
-	
-}
+
 
 
 void State::draw()
@@ -111,7 +68,7 @@ void Menu::update()
 			case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
 				if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
 				{
-					//TODO ONCE BUTTONS HAVE BEEN CREATED - SCW
+					/*CHANGE STATE ACCORDING TO BUTTON SELECTION -SCW*/
 					if (button[MENU]->selected)
 					{
 						//Go to Menu State
@@ -187,7 +144,13 @@ Menu::~Menu()
 #pragma region Game
 Game::Game()
 {
-	//background = IMG_LoadTexture(ren, "Images/BG_Game.png");//Load texture for the background - SCW
+	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
+	cout << SDL_GetError() << endl; //Show SDL Errors - SCW
+	
+	/*Create Button and set its X,Y Coordinates - Kai*/
+	menubutton = new Button(0, 0);
+	menubutton->setXY(500, 280);
+
 }
 void Game::update()
 {	
@@ -198,20 +161,53 @@ void Game::update()
 	{
 		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
 		{
-			CheckEvents(e); //Call function to check SDL events - SCW
+			switch (e.type) //Check the even type - SCW
+			{
+			case SDL_QUIT: //If quitting the application - SCW
+				running = false; //Set the run state of the application to false = SCW
+				return;
+			case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
+				if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
+				{
+					/*CHANGE STATE ACCORDING TO BUTTON SELECTION -SCW*/
+					if (menubutton->selected)
+					{
+						//Go to Menu State
+						current = menu;
+						updating = false;
+						return;
+					}
+					
+				}
+			}
+			/*IF THE EVENT IS TO QUIT THE SDL APPLICATION - SCW*/
 			if (e.type == SDL_QUIT)
 			{
 				updating = false;
 			}
 		}
+
+
+		//Get keyboard Input
+		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
+		//Update Objects
+		//Check Things (mouse location, collision, etc.)
+		//Call draw function(s)
+		draw(); //Draw the screen - SCW
+		menubutton->draw(); //Draw the menu button - SCW
+
+		//Check for State Change
+		if (currentKeyState[SDL_SCANCODE_ESCAPE])
+		{
+			//Go to Menu State
+			current = menu;
+			updating = false;
+			break;
+		}
+	
 	}
 
-	//Get keyboard Input
-	//Update Objects
-	//Check Things (mouse location, collision, etc.)
-	//Call draw function(s)
-	draw();
-	//Check for State Change
+	
 }
 Game::~Game()
 {
@@ -222,7 +218,12 @@ Game::~Game()
 #pragma region Options
 Options::Options()
 {
-	//background = IMG_LoadTexture(ren, "Images/BG_Options.png");//Load texture for the background - SCW
+	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
+	cout << SDL_GetError() << endl; //Show SDL Errors - SCW
+	
+	/*Create Button and set its X,Y Coordinates - Kai*/
+	menubutton = new Button(0, 0);
+	menubutton->setXY(500, 680);
 }
 void Options::update()
 {
@@ -233,20 +234,51 @@ void Options::update()
 	{
 		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
 		{
-			CheckEvents(e); //Call function to check SDL events - SCW
+			switch (e.type) //Check the even type - SCW
+			{
+			case SDL_QUIT: //If quitting the application - SCW
+				running = false; //Set the run state of the application to false = SCW
+				return;
+			case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
+				if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
+				{
+					/*CHANGE STATE ACCORDING TO BUTTON SELECTION -SCW*/
+					if (menubutton->selected)
+					{
+						//Go to Menu State
+						current = menu;
+						updating = false;
+						return;
+					}
+
+				}
+			}
+			/*IF THE EVENT IS TO QUIT THE SDL APPLICATION - SCW*/
 			if (e.type == SDL_QUIT)
 			{
 				updating = false;
 			}
 		}
-	}
 
-	//Get keyboard Input
-	//Update Objects
-	//Check Things (mouse location, collision, etc.)
-	//Call draw function(s)
-	draw();
-	//Check for State Change
+
+		//Get keyboard Input
+		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
+																   //Update Objects
+																   //Check Things (mouse location, collision, etc.)
+																   //Call draw function(s)
+		draw(); //Draw the screen - SCW
+		menubutton->draw(); //Draw the menu button - SCW
+
+							//Check for State Change
+		if (currentKeyState[SDL_SCANCODE_ESCAPE])
+		{
+			//Go to Menu State
+			current = menu;
+			updating = false;
+			break;
+		}
+
+	}
 }
 Options::~Options()
 {
@@ -257,8 +289,18 @@ Options::~Options()
 #pragma region HighScore
 HighScore::HighScore()
 {
+
+	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
+	cout << SDL_GetError() << endl; //Show SDL Errors - SCW
+
+	/*Create Button and set its X,Y Coordinates - Kai*/
+	menubutton = new Button(0, 0);
+	menubutton->setXY(500, 680);
+
+
+
+
     rect = SDL_Rect{ 20, 20, 0, 0 };
-	//background = IMG_LoadTexture(ren, "Images/BG_HighScore.png");//Load texture for the background - SCW
     font = TTF_OpenFont("vgafix.fon", 18);
     
     surface = TTF_RenderText_Blended_Wrapped(font, "i like\n peanuts", SDL_Color{255, 50, 50, 255}, 400);
@@ -279,20 +321,51 @@ void HighScore::update()
 	{
 		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
 		{
-			CheckEvents(e); //Call function to check SDL events - SCW
+			switch (e.type) //Check the even type - SCW
+			{
+			case SDL_QUIT: //If quitting the application - SCW
+				running = false; //Set the run state of the application to false = SCW
+				return;
+			case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
+				if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
+				{
+					/*CHANGE STATE ACCORDING TO BUTTON SELECTION -SCW*/
+					if (menubutton->selected)
+					{
+						//Go to Menu State
+						current = menu;
+						updating = false;
+						return;
+					}
+
+				}
+			}
+			/*IF THE EVENT IS TO QUIT THE SDL APPLICATION - SCW*/
 			if (e.type == SDL_QUIT)
 			{
 				updating = false;
 			}
 		}
-	}
 
-	//Get keyboard Input
-	//Update Objects
-	//Check Things (mouse location, collision, etc.)
-	//Call draw function(s)
-	draw();
-	//Check for State Change
+
+		//Get keyboard Input
+		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
+																   //Update Objects
+																   //Check Things (mouse location, collision, etc.)
+																   //Call draw function(s)
+		draw(); //Draw the screen - SCW
+		menubutton->draw(); //Draw the menu button - SCW
+
+							//Check for State Change
+		if (currentKeyState[SDL_SCANCODE_ESCAPE])
+		{
+			//Go to Menu State
+			current = menu;
+			updating = false;
+			break;
+		}
+
+	}
 }
 
 HighScore::~HighScore()
