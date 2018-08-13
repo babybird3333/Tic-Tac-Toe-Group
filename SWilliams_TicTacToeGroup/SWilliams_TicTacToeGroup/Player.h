@@ -11,9 +11,8 @@ public:
     Player(bool);
     ~Player();
 
-    void saveScore();
-    void loadScore();
-	void ChangeTexture(int, string); //Changes the texture of the player (either X or O) according to the user's selection in the optrions state - SCW 
+    void saveScore(string);
+	void ChangeTexture(int); //Changes the texture of the player (either X or O) according to the user's selection in the optrions state - SCW 
 };
 
 

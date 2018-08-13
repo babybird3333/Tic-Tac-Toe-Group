@@ -306,7 +306,6 @@ Options::~Options()
 #pragma region HighScore
 HighScore::HighScore()
 {
-
 	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
 	cout << SDL_GetError() << endl; //Show SDL Errors - SCW
 
@@ -314,13 +313,36 @@ HighScore::HighScore()
 	menubutton = new Button(0, 0);
 	menubutton->setXY(500, 580);
 
+    ifstream input = ifstream("score.bin", ios::binary | ios::in);
 
+    char num = 0;
+    input.read((char*)num, sizeof(char));
 
+    string names[100];
+    char scores[100];
+
+    for (int i = 0; i < num; i++)
+    {
+        char name[3];
+        input.read((char*)name, sizeof(name));
+
+        char score = 0;
+        input.read((char*)score, sizeof(score));
+
+        names[i] = string(name);
+        scores[i] = score;
+    }
+
+    string masterString;
+
+    char i = 0;
+    for (auto name : names)
+        masterString += name + " " + scores[i] + "\n";
 
     rect = SDL_Rect{ 20, 20, 0, 0 };
     font = TTF_OpenFont("vgafix.fon", 18);
     
-    surface = TTF_RenderText_Blended_Wrapped(font, "i like\n peanuts", SDL_Color{255, 50, 50, 255}, 400);
+    surface = TTF_RenderText_Blended_Wrapped(font, masterString.c_str(), SDL_Color{255, 50, 50, 255}, 400);
     texture = SDL_CreateTextureFromSurface(ren, surface);
 
     SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);

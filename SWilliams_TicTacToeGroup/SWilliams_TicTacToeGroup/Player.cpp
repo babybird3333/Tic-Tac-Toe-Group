@@ -21,40 +21,76 @@ Player::~Player()
 {
 }
 
-void Player::saveScore()
+//get the player name(3 characters) and call this to add 1 to their score
+void Player::saveScore(string playerName)
 {
-
-    ofstream output = ofstream("score.bin", ios::binary | ios::out);
-
-    if (isPlayerX)
-        output.write((char*)score, sizeof(score));
-    else
-    {
-        output.seekp(sizeof(score));
-        output.write((char*)score, sizeof(score));
-    }
-
-    output.close();
-}
-
-void Player::loadScore()
-{
+    //open input file stream
     ifstream input = ifstream("score.bin", ios::binary | ios::in);
 
-    if (isPlayerX)
-        input.read((char*)score, sizeof(score));
-    else
+    //read the total numbe of score entries
+    char num = 0;
+    input.read((char*)num, sizeof(char));
+
+    //arrays to score all of the read data
+    string names[100];
+    char scores[100];
+
+    //for (the number of score entries) and read name/score pairs into the data arrays
+    for (int i = 0; i < num; i++)
     {
-        input.seekg(sizeof(score));
+        char name[3];
+        input.read((char*)name, sizeof(name));
+
+        char score = 0;
         input.read((char*)score, sizeof(score));
+
+        names[i] = string(name);
+        scores[i] = score;
     }
 
-    input.close();
+    //output file stream
+    ofstream output = ofstream("score.bin", ios::binary | ios::out);
+
+    char i = 0;
+    bool exists = false;
+
+    //loop through all names, if the given player name already exists, add 1 to it's score
+    for (auto name : names)
+    {
+        if (name == playerName)
+        {
+            exists = true;
+            scores[i]++;
+            break;
+        }
+        i++;
+    }
+    
+    //if that player doesnt exist, add it to the end of the data arrays with a score of 1
+    if (!exists)
+    {
+        i++;
+        names[i] = playerName;
+        scores[i] = 1;
+    }
+
+    //write the total number of scores
+    output.write(&i, sizeof(i));
+    i = 0;
+
+    //loop through all the scores and write the name/score pairs
+    for (auto name : names)
+    {
+        output.write(names[i].c_str(), sizeof(names[i]));
+        output.write(&scores[i], sizeof(scores[i]));
+        i++;
+    }
 }
 
-void Player::ChangeTexture(int texture_type, string player_type)
+
+void Player::ChangeTexture(int texture_type)
 {
-	if (player_type == "X")
+	if (isPlayerX)
 	{
 		//Update the texture according to the user's selection 
 		switch (texture_type)
@@ -73,7 +109,7 @@ void Player::ChangeTexture(int texture_type, string player_type)
 			textPlayer = IMG_LoadTexture(ren, "Images/BlueX.png");
 		}
 	}
-	else if (player_type == "O")
+	else
 	{
 		//Update the texture according to the user's selection 
 		switch (texture_type)
