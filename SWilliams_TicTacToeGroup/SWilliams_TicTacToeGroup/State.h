@@ -40,13 +40,20 @@ public:
 };
 
 
-
+struct SnapRects				//Kai
+{								//Kai
+public:							//Kai
+    Piece* piece;
+    SDL_Rect square;			//Kai
+};
 
 class Game : public State { //Game Class (derived from State) - SCW
 
 public:
-	Piece p;				//Kai
-	
+    Player* playerX;
+    Player* playerO;
+    Player* currentPlayer;
+    SnapRects sqr[9];        //Kai
 	Button * menubutton; //Insert Button Information - Kai
 	SDL_Texture * board;	//Kai
 	Game();
@@ -54,15 +61,6 @@ public:
 	virtual  ~Game();
 
 };
-
-
-struct SnapRects				//Kai
-{								//Kai
-public:							//Kai
-	SDL_Rect square;			//Kai
-	bool piecePresent = false;	//Kai
-};								//Kai
-
 
 
 class Options : public State { //Options Class (derived from State) - SCW

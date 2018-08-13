@@ -8,7 +8,7 @@ using namespace std;
 struct Piece							//Kai
 {										//Kai
 	SDL_Texture * texture;				//Kai
-	SDL_Rect rect = { 0, 0, 300, 300 };	//Kai
+	SDL_Rect rect = { 0, 0, 175, 175 };	//Kai
 	bool isSelected = false;			//Kai
 	bool isDragged = false;				//Kai
 	bool isX = true;					//Kai
@@ -16,14 +16,10 @@ struct Piece							//Kai
 	void drag(Mouse &);					//Kai
 };										//Kai
 
-
-
-
-
 class Player
 {
 public:
-	SDL_Texture * textPlayer;
+    Piece piece;
     bool isPlayerX;
     unsigned int score;
     Player(bool);

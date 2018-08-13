@@ -13,6 +13,7 @@
 #include <deque>
 #include <ctime>
 #include <iomanip>
+#include <cmath>
 #include <fstream>
 using namespace std;
 

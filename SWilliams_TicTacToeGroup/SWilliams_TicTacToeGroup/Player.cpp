@@ -2,19 +2,15 @@
 
 Player::Player(bool isPlayerX) : isPlayerX{ isPlayerX }
 {
-	
+    piece = Piece();
+    piece.isX = isPlayerX;
+
 	if (isPlayerX) //To do if the player is X - SCW
-	{
 		//Load the "default" texture for player X - SCW
-		textPlayer = IMG_LoadTexture(ren, "Images/BlueX.png");
-	}
-	else if (!isPlayerX) //To do if the player is Y - SCW
-	{
+		piece.texture = IMG_LoadTexture(ren, "Images/BlueX.png");
+    else //To do if the player is Y - SCW
 		//Load the "default" texture for player Y - SCW
-		textPlayer = IMG_LoadTexture(ren, "Images/BlueY.png");
-	}
-
-
+		piece.texture = IMG_LoadTexture(ren, "Images/BlueO.png");
 }
 
 Player::~Player()
@@ -32,8 +28,8 @@ void Player::saveScore(string playerName)
     input.read((char*)num, sizeof(char));
 
     //arrays to score all of the read data
-    string names[100];
-    char scores[100];
+    string names[10];
+    char scores[10];
 
     //for (the number of score entries) and read name/score pairs into the data arrays
     for (int i = 0; i < num; i++)
@@ -97,16 +93,16 @@ void Player::ChangeTexture(int texture_type)
 		{
 		case 1:
 			//Load the "blue" texture for player X - SCW
-			textPlayer = IMG_LoadTexture(ren, "Images/BlueX.png");
+			piece.texture = IMG_LoadTexture(ren, "Images/BlueX.png");
 		case 2:
 			//Load the "green" texture for player X - SCW
-			textPlayer = IMG_LoadTexture(ren, "Images/GreenX.png");
+			piece.texture = IMG_LoadTexture(ren, "Images/GreenX.png");
 		case 3:
 			//Load the "red" texture for player X - SCW
-			textPlayer = IMG_LoadTexture(ren, "Images/RedX.png");
+			piece.texture = IMG_LoadTexture(ren, "Images/RedX.png");
 		default:
 			//Load the "default" texture for player X - SCW
-			textPlayer = IMG_LoadTexture(ren, "Images/BlueX.png");
+			piece.texture = IMG_LoadTexture(ren, "Images/BlueX.png");
 		}
 	}
 	else
@@ -116,16 +112,16 @@ void Player::ChangeTexture(int texture_type)
 		{
 		case 1:
 			//Load the "blue" texture for player O - SCW
-			textPlayer = IMG_LoadTexture(ren, "Images/BlueO.png");
+			piece.texture = IMG_LoadTexture(ren, "Images/BlueO.png");
 		case 2:
 			//Load the "green" texture for player O - SCW
-			textPlayer = IMG_LoadTexture(ren, "Images/GreenO.png");
+			piece.texture = IMG_LoadTexture(ren, "Images/GreenO.png");
 		case 3:
 			//Load the "red" texture for player O - SCW
-			textPlayer = IMG_LoadTexture(ren, "Images/RedO.png");
+			piece.texture = IMG_LoadTexture(ren, "Images/RedO.png");
 		default:
 			//Load the "default" texture for player O - SCW
-			textPlayer = IMG_LoadTexture(ren, "Images/BlueO.png");
+			piece.texture = IMG_LoadTexture(ren, "Images/BlueO.png");
 		}
 	}
 
@@ -136,13 +132,10 @@ void Player::ChangeTexture(int texture_type)
 
 void Piece::drag(Mouse& mouse)							//Kai
 {														//Kai
-	if (isDragged)										//Kai
-	{													//Kai
-		SDL_GetMouseState(&mouse.tip.x, &mouse.tip.y);	//Kai
-		rect.x = mouse.tip.x;							//Kai
-		rect.y = mouse.tip.y;							//Kai
-	}													//Kai
-}														//Kai
+    SDL_GetMouseState(&mouse.tip.x, &mouse.tip.y);	//Kai
+    rect.x = mouse.tip.x;							//Kai
+    rect.y = mouse.tip.y;							//Kai
+}
 void Piece::draw()										//Kai
 {														//Kai
 	SDL_RenderDrawRect(ren, &rect);						//Kai

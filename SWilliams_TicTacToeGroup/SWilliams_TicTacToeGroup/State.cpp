@@ -1,10 +1,6 @@
 #include "State.h"
 
 
-
-
-
-
 #pragma region State
 State::State()
 {
@@ -152,27 +148,51 @@ Menu::~Menu()
 
 
 #pragma region Game
+
 Game::Game()
 {
+    playerX = new Player(true);
+    playerO = new Player(false);
+    currentPlayer = playerX;
+
 	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
 	cout << SDL_GetError() << endl; //Show SDL Errors - SCW
 	board = IMG_LoadTexture(ren, "Images/CrossBoard.png");						//Kai
 
 	/*Create Button and set its X,Y Coordinates - Kai*/
 	menubutton = new Button(0, 0);
-	menubutton->setXY(500, 580);
+	menubutton->setXY(1280 - 192, 720 - 64);
 
+    int offsetX = 325;
+    int offsetY = 50;
+    int sizeX = 175;
+    int sizeY = 175;
+    int padding = 50;
+    int x = 0;
+    int y = 0;
+    //set squares
+    for (int i = 0; i < 9; i++)
+    {
+        //left to right     1   2   3
+        //top to bottom     4   5   6
+        //                  7   8   9
+        x = (sizeX + padding) * i;
+        y = 0;
+        while (x > (sizeX + padding) * 2)
+        {
+            x -= (sizeX + padding) * 3;
+            y += (sizeY + padding);
+        }
+        sqr[i].square = { x + offsetX, y + offsetY, sizeX, sizeY };
+        sqr[i].piece = NULL;
+    }
 }
 void Game::update()
 {	
-
-	SnapRects sq[9];													//Kai
-	for (int i = 0; i < 9; i++)											//Kai
-	{																	//Kai
-		sq[i].square = { 0, 0, 220, 220 };								//Kai
-		SDL_RenderDrawRect(ren, &sq[i].square);							//Kai
-	}																	//Kai
-
+    //all flag combinations of tictactor
+    int ticTacToes[8]{ (1 + 2 + 4), (8 + 16 + 32), (64 + 128 + 256),
+        (1 + 8 + 64), (2 + 16 + 128), (4 + 32 + 256),
+        (1 + 16 + 256), (4 + 16 + 64) };
 
 
 	bool updating = true; //Set update state of the application to true - SCW
@@ -180,6 +200,44 @@ void Game::update()
 
 	while (updating) //To do while update state is true - SCW
 	{
+        int xFlag = 0;
+        int oFlag = 0;
+        int index = 0;
+
+        for (; index < 9; index++)
+        {
+            //if a piece exists
+            if (sqr[index].piece != NULL)
+                //if it's an X
+                if (sqr[index].piece->isX)
+                    xFlag |= (int)pow(2, index); //add an exponential bit to the flag
+                else
+                    oFlag |= (int)pow(2, index); //o flag if not x
+        }
+        if (xFlag > 0)
+            cout << xFlag << endl;
+        //whether or not there's a tictactoe
+        bool ticTacToe = false;
+
+        for (auto t : ticTacToes)
+        {
+            int whatFlag = xFlag & t;
+            if ((xFlag & t) == t)
+                ticTacToe = true;
+            else if ((oFlag & t) == t)
+                ticTacToe = true;
+        }
+
+        if (ticTacToe)
+        {
+            //do things to save score
+            //winningplayer = currentPlayer == playerX ? playerO : playerX;
+            //winningplayer.saveScore("NAME HERE");
+            updating = false;
+            current = menu;
+            game = new Game();
+        }
+
 		while (SDL_PollEvent(&e)) //To do while there's a pending SDL Event - SCW 
 		{
 			switch (e.type) //Check the even type - SCW
@@ -192,11 +250,17 @@ void Game::update()
 				{
 					if (e.button.button == SDL_BUTTON_LEFT)				//Kai
 					{													//Kai
-						if (p.isSelected)								//Kai
-						{												//Kai
-							p.isDragged = !p.isDragged;					//Kai
-							break;										//Kai
-						}												//Kai
+                        for (auto &s : sqr)
+                            if (s.piece == NULL && SDL_HasIntersection(&mouse->tip, &s.square))
+                            {
+                                Piece* newPiece = new Piece();
+                                newPiece->texture = currentPlayer->piece.texture;
+                                newPiece->isX = currentPlayer->piece.isX;
+                                newPiece->rect = s.square;
+                                s.piece = newPiece;
+
+                                currentPlayer = currentPlayer == playerX ? playerO : playerX;
+                            }
 					}													//Kai
 					/*CHANGE STATE ACCORDING TO BUTTON SELECTION -SCW*/
 					if (menubutton->selected)
@@ -215,7 +279,8 @@ void Game::update()
 				updating = false;
 			}
 		}
-		p.drag(*mouse);													//Kai
+
+		currentPlayer->piece.drag(*mouse);													//Kai
 
 		//Get keyboard Input
 		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
@@ -226,10 +291,21 @@ void Game::update()
 		draw(); //Draw the screen - SCW
 		for (int i = 0; i < 9; i++) //Draw the squares - Kai
 		{
-			SDL_RenderDrawRect(ren, &sq[i].square);
+			SDL_RenderDrawRect(ren, &sqr[i].square);
 		}
-		SDL_RenderCopy(ren, board, NULL, NULL); //Draw the crossboard - Kai
-		p.draw(); //Draw the piece - Kai
+
+        //center the board on the screen
+        int x = (1280 - 734) / 2;
+        int y = (720 - 664) / 2;
+        SDL_Rect dRect{ x, y, 734, 663 };
+		SDL_RenderCopy(ren, board, NULL, &dRect); //Draw the crossboard - Kai
+
+        for (auto s : sqr)
+            if (s.piece != NULL)
+                s.piece->draw();
+
+		currentPlayer->piece.draw(); //Draw the piece - Kai
+
 		menubutton->draw(); //Draw the menu button - SCW
 		menubutton->checkSelected(mouse); //Check to see if the button has been selected - SCW
 		mouse->draw(); //Draw the mouse - SCW
@@ -242,7 +318,6 @@ void Game::update()
 			updating = false;
 			break;
 		}
-	
 	}
 
 	
