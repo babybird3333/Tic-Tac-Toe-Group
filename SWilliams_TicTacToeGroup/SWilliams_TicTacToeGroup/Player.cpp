@@ -132,3 +132,20 @@ void Player::ChangeTexture(int texture_type)
 
 }
 
+
+
+void Piece::drag(Mouse& mouse)							//Kai
+{														//Kai
+	if (isDragged)										//Kai
+	{													//Kai
+		SDL_GetMouseState(&mouse.tip.x, &mouse.tip.y);	//Kai
+		rect.x = mouse.tip.x;							//Kai
+		rect.y = mouse.tip.y;							//Kai
+	}													//Kai
+}														//Kai
+void Piece::draw()										//Kai
+{														//Kai
+	SDL_RenderDrawRect(ren, &rect);						//Kai
+	SDL_RenderCopy(ren, texture, NULL, &rect);			//Kai
+}														//Kai
+

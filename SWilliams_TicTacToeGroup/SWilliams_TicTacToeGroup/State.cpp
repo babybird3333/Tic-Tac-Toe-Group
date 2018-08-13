@@ -156,7 +156,8 @@ Game::Game()
 {
 	background = IMG_LoadTexture(ren, "Images/GameBackGround.png");//Load texture for the background - SCW
 	cout << SDL_GetError() << endl; //Show SDL Errors - SCW
-	
+	board = IMG_LoadTexture(ren, "Images/CrossBoard.png");						//Kai
+
 	/*Create Button and set its X,Y Coordinates - Kai*/
 	menubutton = new Button(0, 0);
 	menubutton->setXY(500, 580);
@@ -164,6 +165,16 @@ Game::Game()
 }
 void Game::update()
 {	
+
+	SnapRects sq[9];													//Kai
+	for (int i = 0; i < 9; i++)											//Kai
+	{																	//Kai
+		sq[i].square = { 0, 0, 220, 220 };								//Kai
+		SDL_RenderDrawRect(ren, &sq[i].square);							//Kai
+	}																	//Kai
+
+
+
 	bool updating = true; //Set update state of the application to true - SCW
 	SDL_Event e; //Keeps track of the event - SCW
 
@@ -179,6 +190,14 @@ void Game::update()
 			case SDL_MOUSEBUTTONUP: //If the mouse button was released - SCW
 				if (e.button.button == SDL_BUTTON_LEFT) //To do if the left button was clicked - SCW
 				{
+					if (e.button.button == SDL_BUTTON_LEFT)				//Kai
+					{													//Kai
+						if (p.isSelected)								//Kai
+						{												//Kai
+							p.isDragged = !p.isDragged;					//Kai
+							break;										//Kai
+						}												//Kai
+					}													//Kai
 					/*CHANGE STATE ACCORDING TO BUTTON SELECTION -SCW*/
 					if (menubutton->selected)
 					{
@@ -196,7 +215,7 @@ void Game::update()
 				updating = false;
 			}
 		}
-
+		p.drag(*mouse);													//Kai
 
 		//Get keyboard Input
 		const Uint8* currentKeyState = SDL_GetKeyboardState(NULL); //Setup current key state - SCW
@@ -205,6 +224,12 @@ void Game::update()
 		SDL_GetMouseState(&(mouse->cursor.x), &(mouse->cursor.y)); //Access the location of the mouse's cursor rectangle - SCW
 		//Call draw function(s)
 		draw(); //Draw the screen - SCW
+		for (int i = 0; i < 9; i++) //Draw the squares - Kai
+		{
+			SDL_RenderDrawRect(ren, &sq[i].square);
+		}
+		SDL_RenderCopy(ren, board, NULL, NULL); //Draw the crossboard - Kai
+		p.draw(); //Draw the piece - Kai
 		menubutton->draw(); //Draw the menu button - SCW
 		menubutton->checkSelected(mouse); //Check to see if the button has been selected - SCW
 		mouse->draw(); //Draw the mouse - SCW
